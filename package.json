@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "websockets",
   "main": "server.ts",
+  "type": "module",
   "author": "w3rc",
   "license": "MIT",
   "scripts": {
