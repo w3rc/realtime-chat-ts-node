@@ -13,9 +13,31 @@ app.get('/', function (req, res) {
 });
 // Socket
 var socketio = require('socket.io')(http);
-socketio.on('connection', function (userSocket) {
-    userSocket.on('send_message', function (data) {
-        userSocket.broadcast.emit('receive_message', data);
+// socketio.on('connection', (userSocket: any) => {
+// 	userSocket.on('send_message', (data: any) => {
+// 		userSocket.broadcast.emit('receive_message', data);
+// 	});
+// });
+socketio.on('connection', function (socket) {
+    //Get the chatID of the user and join in a room of the same chatID
+    var chatID = 'ABCD';
+    chatID = socket.handshake.query.chatID;
+    socket.join(chatID);
+    //Leave the room if the user closes the socket
+    socket.on('disconnect', function () {
+        socket.leave(chatID);
+    });
+    //Send message to only a particular user
+    socket.on('send_message', function (message) {
+        var receiverChatID = message.receiverChatID;
+        var senderChatID = message.senderChatID;
+        var content = message.content;
+        //Send message to only that particular room
+        socket.in(receiverChatID).emit('receive_message', {
+            content: content,
+            senderChatID: senderChatID,
+            receiverChatID: receiverChatID,
+        });
     });
 });
 http.listen(process.env.PORT, function () {
