@@ -7,11 +7,11 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon server.ts",
-    "start": "node dist/index.js",
     "postinstall": "tsc",
-    "watch-node": "nodemon dist/index.js",
+    "watch-node": "nodemon index.js",
     "watch-ts": "tsc -w",
-    "deploy": "tsc && git add . && git commit -m Heroku && git push heroku master"
+    "deploy": "tsc && git add . && git commit -m Heroku && git push heroku master",
+    "git": "git add . && git commit -m '...' && git push origin master"
   },
   "dependencies": {
     "express": "^4.17.1",
