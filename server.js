@@ -9,7 +9,7 @@ var app = express_1.default();
 var http = require('http').createServer(app);
 app.get('/', function (req, res) {
     console.log('connected');
-    return res.json('Hi there');
+    return res.json('Realtime P2P Chat');
 });
 // Socket
 var socketio = require('socket.io')(http);
