@@ -25,14 +25,13 @@ const socketio = require('socket.io')(http);
 // });
 
 socketio.on('connection', (socket:any) => {
-	//Get the chatID of the user and join in a room of the same chatID
-	// let chatRoom = 'ABCD';
-	const chatRoom = socket.handshake.query.chatRoom;
-	socket.join(chatRoom);
+	//Get the chatID/userID of the user and join in a room of the same chatID
+	const chatID = socket.handshake.query.chatID;
+	socket.join(chatID);
 
 	//Leave the room if the user closes the socket
 	socket.on('disconnect', () => {
-		socket.leave(chatRoom);
+		socket.leave(chatID);
 	});
 
 	//Send message to only a particular user
@@ -42,10 +41,10 @@ socketio.on('connection', (socket:any) => {
 		const content = message.content;
 
 		//Send message to only that particular room
-		socket.in(chatRoom).emit('receive_message', {
+		socket.in(chatID).emit('receive_message', {
 			'content': content,
-			'senderChatID': senderChatID,
-            'receiverChatID':receiverChatID,
+			'senderID': senderChatID,
+            'receiverID':receiverChatID,
 		});
 	});
 });
