@@ -11,7 +11,7 @@
     "watch-node": "nodemon index.js",
     "watch-ts": "tsc -w",
     "deploy": "tsc && git add . && git commit -m Heroku && git push heroku master",
-    "git": "git add . && git commit -m commit && git push origin master"
+    "git": "git push origin master"
   },
   "dependencies": {
     "express": "^4.17.1",
